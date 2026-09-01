@@ -1,0 +1,23 @@
+Rename the npm scope from @harness-sample to @support-desk, and the root
+package name from harness-sample to support-desk.
+
+The repo is now called support-desk and the old name is gone everywhere else.
+The scope is the last place it survives.
+
+## What this touches
+
+Every package.json name and dependency entry, every import across apps and
+packages, eslint.config.js, .dependency-cruiser.cjs, the CSS @import in
+apps/web/src/index.css, and the lint plugin's own rule messages — which name the
+scope in the text they report, and whose tests assert that text.
+
+## Constraints
+
+- All existing tests must pass and the count must not drop.
+- Lint warning count must not change.
+- lint:boundaries must pass.
+- Regenerate the lockfile rather than editing it.
+- Strict TypeScript, no `any`.
+- Run typecheck, lint, tests and lint:boundaries at the end and report what
+  passes.
+- Do not commit.
