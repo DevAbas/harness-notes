@@ -503,3 +503,62 @@ Together they say where the auditor can be trusted. It is reliable on the
 mechanism — that a claim is unchecked, that a primitive is missing — and not on
 the extent, in either direction. So a file list or a count in an audit report is
 grepped before it becomes a note.
+
+Third instance, and it widens the rule past audits. m11-1 came from the agent
+doing the work rather than from an auditor: one `dist/` directory named, 157
+modules of 585, and harness-06 found four directories and 277. Mechanism right,
+extent low, and `find . -type d -name dist` settled it in one command.
+
+So the rule is not about auditors. Any report of extent — a file list, a count, a
+share of a total — is checked against the tree before it becomes a note,
+whichever side of the work it came from.
+
+### An audit against a diff cannot see what stayed the same
+
+Observed in m11. The blind auditor found nothing, correctly: 227 lines replaced,
+none added or removed, every check matching baseline. The measurement's only
+finding was that `.dependency-cruiser.cjs` walks a `dist/` directory, so some of
+the 585 modules it reports are build artefacts and the count in every header from
+m09 on is a function of when a build last ran. The m11 report put that at 157
+modules under `apps/api/dist/`; harness-06 found four `dist/` directories, and
+277 of the 585 — more than half — were build output.
+
+Those files did not change. They were correctly left alone, and being left alone
+is exactly what made them invisible to an auditor reading a diff.
+
+The finding came from the agent doing the work, which regenerated the lockfile,
+saw the module count move by one, and chased it.
+
+This is a different blind spot from the one already recorded here. There the
+auditor was right about a mechanism and wrong about its extent. Here it was right
+about everything it could see, and what mattered was outside the frame.
+
+The extent links the two entries as well. harness-06 is the third instance of
+the pattern recorded above and the first from a different source: not an auditor
+reading a diff but the agent doing the work reporting on its own side effect.
+Both got the mechanism right and the extent low, and in both cases the
+correction came from one command against the tree rather than from reading the
+report more carefully.
+
+Practical consequence: on a task where the question is what should have been
+touched rather than what was, the diff-reading audit is the wrong instrument and
+a second pass over the untouched tree is needed.
+
+### The number of open decisions is the cost, not the size of the work
+
+Third correction to the same note.
+
+harness-05 recorded that combining three unrelated pieces of work in one brief
+cost time, and inferred the batching was the cause.
+
+m10 was one piece of work and cost more — 30 minutes and $17.56 against 24
+minutes and $10.93 — so the inference moved to breadth of work.
+
+m11 was 145 files against m10's 30, and cost $1.38 over 4 minutes of API time.
+Five times the files, thirteen times cheaper.
+
+What separates them is not size. m10's brief left seven design decisions open by
+name. m11 left none: every occurrence had one correct replacement and the
+compiler could see all of them.
+
+Known uses: harness-05, m10, m11.

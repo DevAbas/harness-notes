@@ -227,6 +227,30 @@ And one product decision was invented rather than asked for — reports was made
 admin-only, because the brief's constraint presumed a role difference the repo
 did not have.
 
+## m11 — rename the npm scope
+A mechanical migration, measured. Baseline fix-m10, layers 1, 1b, 1c, 2 and 3 in
+place, 145 files modified and none new, 493 tests before and after. The first
+measurement with no design decision in it: rename the scope from @harness-sample
+to @support-desk after the repo itself was renamed, 195 occurrences across 144
+files plus the root package name. Nothing about what to build, only what to
+replace. Audited blind through the packaged skill before the diff was read.
+
+The audit found nothing, which is a first in eleven measurements. 227 insertions
+against 227 deletions — every line replaced, none added or removed, which is the
+signature a mechanical migration should leave — and typecheck, lint at 5
+warnings, 493 tests and 585 modules all match the baseline exactly. There was no
+gap to fill differently because there was no gap: every occurrence had one
+correct replacement and the compiler could see all of them.
+
+The one finding came from neither audit. The agent doing the rename regenerated
+the lockfile, saw the boundary count move by one, chased it, and reported that
+.dependency-cruiser.cjs walks apps/api/dist/, so some of the modules it counts
+are stale build artefacts — 157 of the 585, by that report. harness-06 found the
+extent was wrong: there are four dist/ directories, not one, and excluding all
+four took the count to 308 modules and 778 dependencies. 277 of the 585 were
+build output, and the check reported the same number before and after a rename
+that did not reach nearly half of them (m11-1).
+
 ---
 
 # What the measurements with a harness show
@@ -262,6 +286,17 @@ about it, and the worst instance is m10-1, where the false claim is in AGENTS.md
 — the file every future task reads first — and repeated in two more until
 repetition made it read as verified. That is the one category no layer in this
 harness has ever closed.
+
+m11 prices the decision count. It touched 145 files against m10's 30 and cost
+$1.38 against $17.56 — five times the files, thirteen times cheaper — because
+m10's brief left seven design questions open by name and m11 left none. That is
+the third correction to the same note: harness-05 blamed batching, m10 moved it
+to breadth of work, and m11 moves it to the number of open decisions.
+
+And one about the method rather than the work. The blind auditor reads a diff,
+so it cannot see a file that correctly did not change: apps/api/dist/ still
+carries the old scope precisely because the rename was right to leave it alone,
+and the finding that mattered was outside the auditor's frame by construction.
 
 ---
 
@@ -416,6 +451,17 @@ in it did the work.
    instances across the record, re-taken in observations.md. Nothing closes it —
    every other census in this record ends in a primitive, and there is no
    primitive to write for a comment that does not check itself.
+   m11 is the same gap from the other side. m09-5 was a rule whose scope had
+   stopped covering the tree it governs; m11-1 is a boundary check that covers a
+   tree it should not — depcruise walked four dist/ directories, so 277 of the
+   585 modules it counted were build output, including apps/web's minified Vite
+   bundle, cruised for boundary violations. Closed in harness-06, which found
+   the extent as well: the report that surfaced it named one directory and 157
+   modules, and excluding all four took the count to 308 modules and 778
+   dependencies. So more than half of what every header from m09 on reported was
+   a function of when a build last ran rather than of the source tree — same
+   cause as m09-5, opposite direction: a scope chosen once against a structure
+   that has since changed.
 
 ---
 
@@ -436,6 +482,7 @@ in it did the work.
       m08-prompt.txt   m08-customers-bulk.md
       m09-prompt.txt   m09-redesign.md
       m10-prompt.txt   m10-global-search.md
+      m11-prompt.txt   m11-scope-rename.md
 
     scaffolds/
       scaffold-reports-findings.md      no prompt file survives
@@ -454,6 +501,8 @@ in it did the work.
                                         silent visual break
       harness-05-toolbar-tints-scope.md not a layer: three m09 findings closed —
                                         Toolbar, the tints, the rule's scope
+      harness-06-boundary-scope.md      not a layer: m11-1 closed — four dist/
+                                        directories excluded, 585 modules to 308
 
 The reports scaffold has no prompt file. Every other entry pairs its findings
 with the prompt that produced them. The auth scaffold carries two: the
