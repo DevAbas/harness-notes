@@ -2,7 +2,7 @@
 
 ## What this is
 
-A measurement experiment on `harness-sample`, a support-ticket admin panel with
+A measurement experiment on `support-desk`, a support-ticket admin panel with
 its own design system. I do not write the feature code. I write the task, the
 agent builds it, and I measure what it got wrong and which layer should have
 caught it.
