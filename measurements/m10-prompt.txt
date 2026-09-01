@@ -1,0 +1,56 @@
+Add a global search.
+
+## What it is for
+
+An agent working the queue needs to reach one thing quickly: a ticket somebody
+just mentioned, the customer who raised it, the settings page they half remember
+the name of. Today that takes three navigations and a filter.
+
+One entry point, reachable from anywhere, that searches across everything the
+app knows about and takes you to what you pick.
+
+## What it searches
+
+Tickets by id, title and assignee. Customers by name, company and email.
+Navigation — the screens themselves, so typing "reports" gets you there.
+
+Results are grouped by what they are, and the groups are ordered so the most
+likely thing is nearest the top. Decide that order and say why you chose it.
+
+## Constraints that are already decided
+
+The server does the searching. Two endpoints exist for tickets and customers
+already; whether this reuses them or needs its own is your call, but the client
+does not fetch everything and filter locally.
+
+A search that reaches the server on every keystroke is not acceptable at this
+size and will not be at the next. The existing customers toolbar shows the
+pattern this repo uses for that.
+
+An agent and an admin do not see the same results. Whatever an agent cannot
+reach through the nav should not appear in their search.
+
+It opens from the keyboard as well as from a control in the header. Pick the
+shortcut and say why.
+
+## What is not decided
+
+How it looks, where it sits, what it does with no query, what it does with no
+results, how it behaves while loading, what keyboard navigation it supports
+once open, whether recent or suggested items appear before anything is typed.
+
+Those are design decisions and I want yours. The design system and AGENTS.md
+carry what this app has already decided; anything they do not answer is open,
+and if you find yourself wanting a primitive that does not exist, say so rather
+than assembling one in the feature.
+
+## Constraints
+
+- Read AGENTS.md before you start.
+- Strict TypeScript, no `any`, both sides.
+- Tests for the endpoints and for the interface, including the empty query, no
+  results, and the agent-versus-admin difference.
+- All existing tests must pass and the count must not drop.
+- Run typecheck, lint, tests and lint:boundaries at the end and report what
+  passes.
+- Do not commit.

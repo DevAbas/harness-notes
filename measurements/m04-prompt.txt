@@ -1,0 +1,1 @@
+Add a way to assign a ticket to someone else from the detail page.

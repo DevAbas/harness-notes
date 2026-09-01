@@ -1,0 +1,67 @@
+Replace the in-memory mock data layer with a real HTTP API and TanStack Query,
+so this repo behaves like a real application. This is scaffold work, not a
+feature.
+
+## Part 1 — the server
+
+Add a small API server under `server/`, using Hono. In-memory store seeded with
+the same 40 tickets currently in src/lib/api.ts, so the app looks unchanged.
+
+Endpoints:
+- GET    /api/tickets            list with status, priority, search, page, pageSize
+                                 query params; returns { rows, total, page, pageCount }
+- GET    /api/tickets/:id        single ticket with its comments
+- POST   /api/tickets            create
+- PATCH  /api/tickets/:id        partial update (status, priority, assignee)
+- POST   /api/tickets/:id/comments
+- PATCH  /api/tickets/bulk       bulk status update
+- DELETE /api/tickets/bulk       bulk delete
+- GET    /api/me                 current role
+
+Validate every request body and query string at the boundary with zod, and return
+proper status codes: 400 for validation failures, 404 for a missing ticket, 200 or
+201 otherwise. Error responses share one shape.
+
+Add artificial latency (150-400ms) and a way to force failures for testing, for
+example a `?fail=1` query param or an env flag, so error states can actually be
+exercised.
+
+Vite dev server proxies /api to it. `npm run dev` starts both.
+
+## Part 2 — TanStack Query on the client
+
+Install @tanstack/react-query. Set up the provider at the app root with sensible
+defaults, and include the devtools in development.
+
+Replace useTickets and every direct call to src/lib/api.ts with query and mutation
+hooks. Requirements:
+
+- A typed query key factory, so keys are never written as inline arrays at call
+  sites and every key that depends on filters includes all of them.
+- A single typed fetch wrapper that throws a typed error on non-2xx responses and
+  parses the body with zod, so nothing untyped reaches the UI.
+- Mutations invalidate exactly what they affect, not the whole cache.
+- Search input is debounced, and TanStack Query's own mechanisms handle the rest;
+  do not hand-roll request cancellation.
+- Keep previous data while a new page or filter loads, so the table does not flash
+  empty on every keystroke.
+- Loading, empty and error states must all still work, and the existing "Try
+  again" affordance should retry the query.
+
+Saved views stay in localStorage. They are client state, not server state, so do
+not move them into the query cache.
+
+## Part 3 — tests
+
+Existing tests must keep passing. Where they mock src/lib/api.ts, move them to
+intercepting HTTP with MSW instead, so tests exercise the real query layer.
+The CSV export test must still verify that the export covers all filtered tickets
+rather than the current page.
+
+## Constraints
+
+- Do not add an AGENTS.md, CLAUDE.md, or any new lint rule.
+- Do not touch the design system. That is a separate piece of work.
+- Do not change the visible behaviour of the app.
+- Strict TypeScript, no `any`, on both server and client.
+- Run typecheck, lint and tests at the end and report what passes.

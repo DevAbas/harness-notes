@@ -1,0 +1,32 @@
+Add a customers directory. Scaffold work for a reference app.
+
+Route /customers in the main nav. A customer has a name, company, email,
+avatar, plan, signup date, and the tickets they have raised.
+
+Build it deliberately unlike the ticket list, because both patterns should
+exist in this repo:
+
+- A dense list with avatars, not a paginated table. Infinite scroll or a
+  load-more, not page numbers.
+- A detail drawer sliding over the list, not a route change.
+- A multi-select filter for plan, not single-value selects.
+
+Server endpoints under /api/customers, built like the ticket routes: zod at the
+boundary, contract in packages/shared, same error shape, same store. Seed
+around 60 customers, linked to the existing tickets by assignee name where it
+makes sense.
+
+Client uses TanStack Query following the existing patterns.
+
+Add what the design system is missing rather than assembling it in the feature:
+Drawer, Avatar, a multi-select control, and a dense list row primitive. Same
+conventions as the existing folder — own directory, types file, index, test,
+cn(), semantic tokens, accessible attributes wired in. Update the design system
+README in the existing voice.
+
+Constraints:
+- No AGENTS.md, CLAUDE.md, or lint rules.
+- Do not change the ticket screens.
+- Strict TypeScript, no `any`.
+- Tests for the new primitives and endpoints.
+- Run typecheck, lint and tests at the end and report what passes.

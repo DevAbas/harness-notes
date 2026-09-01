@@ -1,0 +1,114 @@
+Apply a new visual identity. Every token changes; no component logic changes.
+
+## Colours
+
+--color-primary: #335C67;
+--color-primary-hover: #274852;
+--color-primary-fg: #FDFBF0;
+--color-primary-subtle: #E4EDEF;
+--color-primary-subtle-fg: #274852;
+--color-primary-border: #B9CFD4;
+
+--color-danger: #9E2A2B;
+--color-danger-hover: #540B0E;
+--color-danger-fg: #FDFBF0;
+--color-danger-subtle: #F6E3E2;
+--color-danger-subtle-fg: #540B0E;
+--color-danger-border: #E3BFBE;
+
+--color-warning: #E09F3E;
+--color-warning-subtle: #FFF3B0;
+--color-warning-subtle-fg: #6B4A12;
+--color-warning-border: #EBD79A;
+
+--color-success: #4F6F52;
+--color-success-subtle: #E6EDE6;
+--color-success-subtle-fg: #3A5340;
+--color-success-border: #C2D2C3;
+
+--color-info: #4A7C8C;
+--color-info-subtle: #E7F0F2;
+--color-info-subtle-fg: #2F5A66;
+--color-info-border: #C4DBE1;
+
+--color-fg: #540B0E;
+--color-fg-muted: #7A4F4A;
+--color-fg-subtle: #A08079;
+--color-surface: #FFFFFF;
+--color-surface-muted: #FDFBF0;
+--color-surface-inset: #F7F2DE;
+--color-border: #E5DDC4;
+--color-muted: #F7F2DE;
+--color-muted-fg: #7A4F4A;
+--color-shadow: rgba(84, 11, 14, 0.12);
+
+The icon group added in the last change should be derived from these rather
+than left at its old values.
+
+## Type
+
+Font family: 'IBM Plex Sans', with a metric-similar fallback stack. Load it —
+naming a family without loading it means every browser looks for it and quietly
+falls back.
+
+The geometric scale changes base and ratio rather than individual sizes. Target
+these five, and say what base and ratio you chose and how close each lands:
+
+  title       1.75rem
+  section     1.0625rem
+  subsection  0.8125rem
+  body        0.875rem
+  caption     0.75rem
+
+Line heights recompute from the rule already in the file.
+
+Add letter-spacing to the type scale: -0.02em on title, -0.01em on section,
+none below that. This is a new axis — say what it costs to add.
+
+## Radius
+
+Sharper across the board, keeping the role names:
+
+  inner      0.125rem
+  element    0.1875rem
+  container  0.25rem
+  page       0.5rem
+  full       unchanged
+
+## Elevation
+
+--shadow-card: none. Cards carry their border and nothing else.
+--shadow-overlay: 0 8px 24px var(--color-shadow).
+
+## Density
+
+Everything tightens one step.
+
+  Button sm    h-7   px-2.5
+  Button md    h-9   px-3.5
+  Input        px-2.5 py-1.5
+  CardHeader   px-4 py-3
+  CardBody     px-4 py-3
+  CardFooter   px-4 py-2.5
+  TableCell    px-3 py-2
+  ListRow      px-3 py-1.5
+
+## What I am measuring
+
+How many files under apps/web/src/features have to change. The answer should be
+zero or close to it. If a file there has to change, say which and why before you
+change it.
+
+## Constraints
+
+- No component logic changes. Props, behaviour and structure stay as they are.
+- If a token cannot carry a change and a component has to, name it. That is the
+  finding, not a failure.
+- Check contrast on the neutrals. --color-fg-subtle on --color-surface-muted is
+  the pair I expect to be marginal; tell me what it measures and what else fails
+  if anything does.
+- Update packages/ui/README.md where it describes values rather than rules.
+- All tests must pass and the count must not drop.
+- Run typecheck, lint and tests at the end and report what passes, plus the file
+  count under features.
+- Do not commit.

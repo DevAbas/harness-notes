@@ -1,0 +1,4 @@
+Add saved views. Users can save the current filter combination with a name,
+see their saved views in a sidebar, switch between them, rename and delete
+them. Persist to localStorage. Show which view is active, and mark it as
+modified when the filters no longer match it.
