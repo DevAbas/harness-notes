@@ -24,9 +24,12 @@ The change added a rule to the file every future agent reads first:
     `canReachNavigationTarget`. Gating a screen there gates the nav item, the
     route and every search result that lives on it, in one edit.
 
-The same claim is repeated in packages/shared/src/navigation.ts and in
-RequireRole.tsx: "A screen gated in NAVIGATION_TARGETS is gated everywhere at
-once."
+RequireRole.tsx carries the same claim, in its own wording rather than as a
+copy. packages/shared/src/navigation.ts does not: its claim is scoped
+explicitly to the search — gating a screen takes its records out of everyone
+else's search "without the search being edited" — and that was already true,
+because apps/api/src/search.ts gates record groups on canReachNavigationTarget.
+It never claims every route has a guard.
 
 Only one of the four routes is wrapped. Adding `roles: ['admin']` to `customers`
 would remove the nav item, remove the customer group from that role's search,
@@ -37,7 +40,7 @@ search go quiet, so nothing looks wrong.
 Worse than an ordinary gap, because it is written down as done. The one edit the
 guide promises is safe is the one that opens a silent authorization hole.
 
-Three files repeat the claim and none of them checks it. Repetition made it read
+Two files carry the claim and neither of them checks it. Repetition made it read
 as verified.
 Caught by: nothing — tests exercise only `reports`
 Layer: rule broken, and a candidate for the lint plugin: a target with narrowed
@@ -172,3 +175,29 @@ unrelated pieces of work in one brief cost time, and inferred the batching was
 the cause. This was one piece of work and cost longer — 30 minutes against 24,
 and $17.56 against $10.93. The variable is the breadth of the work, not the
 shape of the brief.
+
+## What was fixed
+
+The four findings were closed on fix/m10-findings, off the measurement branch.
+
+m10-1: every route that is a screen in NAVIGATION_TARGETS is now behind
+RequireRole, including the ticket detail route, which is where a ticket search
+result lands. Three of the four gates pass both roles today; they exist for the
+edit AGENTS.md promises is safe. The claim was made true rather than weakened.
+
+m10-2: branching on the settled term alone was not enough — close() empties the
+field while the debounce still holds the dismissed term. Fixed with an opening
+counter stamped onto the debounced value, so a term that settled under an
+earlier opening reads as nothing asked. The new test was verified to fail
+against the pre-fix component.
+
+m10-3 and m10-4: both call sites explicit; the docblock and README entry now
+describe the two mechanisms rather than claiming they are one.
+
+493 tests, 5 warnings unchanged, boundaries clean.
+
+One thing the fix surfaced, which is a finding in its own right: RequireRole
+redirects to /tickets, so narrowing `tickets` would send the redirect back into
+the route it guards. The one-edit invariant is true for three screens of four.
+Recorded in RequireRole.tsx's docblock rather than in AGENTS.md, since the
+constraint comes from the guard's own redirect target.

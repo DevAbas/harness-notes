@@ -71,8 +71,8 @@ Prose stating a count or a rule the code does not carry:
                 value it is identical to, citing a constant that plays no part,
                 bounding nothing
     harness-04  the eslint config comment saying four violations; it was six
-    m10-1       AGENTS.md's gating invariant, repeated in navigation.ts and
-                RequireRole.tsx, satisfied for one screen of four
+    m10-1       AGENTS.md's gating invariant, restated in RequireRole.tsx,
+                satisfied for one screen of four
 
 Seventeen, and the count has stopped being the argument. Three instances is the
 threshold this repo closes a gap at, and that was passed before the harness
@@ -450,11 +450,13 @@ and this is about what gets written about what was built. The prose is produced
 after the decision, describes the decision as intended, and is never checked
 against what was actually done.
 
-The worst instance in the record is here. m10-1's false invariant is repeated in
-three files — AGENTS.md, navigation.ts and RequireRole.tsx — and checked in
-none. Repetition is what made it read as verified, and one of the three is the
-file every future agent reads first. A wrong comment costs a reviewer's
-attention; a wrong rule in the harness is read by every future task as settled.
+The worst instance in the record is here. m10-1's false invariant is stated in
+AGENTS.md and restated in RequireRole.tsx, in its own wording rather than as a
+copy — the rule and the guard that is supposed to enforce it, agreeing with each
+other and neither checking the routes. That agreement is what made it read as
+verified, and one of the two is the file every future agent reads first. A wrong
+comment costs a reviewer's attention; a wrong rule in the harness is read by
+every future task as settled.
 
 Worth stating as a limit on prompt engineering rather than as a finding about
 m10. A brief buys fewer defects of the kinds it can specify. It buys nothing
@@ -485,3 +487,19 @@ instruction to make it true.
 
 Cheap to prevent — state the premise conditionally, or check it before writing
 it. Neither is obvious at the time, which is why it is recorded.
+
+### An audit is right about the mechanism and wrong about the extent
+
+The blind auditor's m10-1 finding was right and its file list was not. It named
+three files carrying the gating claim; two carried it. The third,
+navigation.ts, made a narrower claim — scoped to the search — and that one was
+true. The overstatement went into the note unchecked, because the audit ran
+before I read the diff and its report was transcribed rather than verified.
+
+Second instance. m08's checkbox census was the first, and it ran the other way:
+the auditor's count was right and mine was wrong.
+
+Together they say where the auditor can be trusted. It is reliable on the
+mechanism — that a claim is unchecked, that a primitive is missing — and not on
+the extent, in either direction. So a file list or a count in an audit report is
+grepped before it becomes a note.
