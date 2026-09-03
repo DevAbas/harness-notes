@@ -1,0 +1,65 @@
+Ticket status is a workflow, not a list.
+
+## What is wrong now
+
+A ticket's status is one of four values and any of them can be set from any
+other. An agent can close a ticket nobody ever worked, reopen a closed one
+without saying why, and move a ticket to resolved while it is still unassigned.
+Nothing stops any of it, because the status is a value and not a position.
+
+Support work has an order. A ticket is picked up, worked, resolved, and closed —
+and the interesting part is what may not happen: a ticket cannot be resolved
+before someone owns it, and a closed ticket does not quietly become open again.
+
+## What is needed
+
+Status changes go through a workflow that says which moves are allowed from
+where, who may make them, and what has to be true first. A move that is not
+allowed is not offered in the interface and is refused by the server.
+
+The four statuses stay. What changes is that they have an order and the moves
+between them are named.
+
+Where a move is refused, the person is told which condition failed, not that it
+was refused.
+
+## What is already decided
+
+The server is the authority. The interface may hide a move it knows is
+unavailable, but it does not decide availability — it asks.
+
+The workflow is data, not branching. Adding a fifth status later should be an
+edit to whatever describes the workflow, not a change to every screen that
+renders a status.
+
+Agents and admins do not have the same moves available. Whatever an agent cannot
+do through the interface, the server refuses for them too.
+
+The existing statuses, their labels and their badge treatments do not change.
+`TICKET_STATUSES` is read by the filters, the bulk bar, the saved views, the
+reports and the CSV export, and none of those should need to know a workflow
+exists.
+
+## What is not decided
+
+What the allowed moves are, and what conditions guard them. What a refused move
+looks like. Whether a ticket carries any history of the moves it has made, and
+what that history is for if it does. What the bulk status bar does when the
+selection contains tickets whose available moves differ. What happens to a
+saved view whose filter no longer describes any reachable state.
+
+Those are design decisions and I want yours. AGENTS.md and the design system
+carry what this app has already decided; anything they do not answer is open,
+and if you find yourself wanting a primitive that does not exist, say so rather
+than assembling one in the feature.
+
+## Constraints
+
+- Read AGENTS.md before you start.
+- Strict TypeScript, no `any`, both sides.
+- Tests for the workflow itself, for the endpoints, and for the interface —
+  including a refused move, a move an agent may not make, and the bulk case.
+- All existing tests must pass and the count must not drop.
+- Run typecheck, lint, tests and lint:boundaries at the end and report what
+  passes.
+- Do not commit.
