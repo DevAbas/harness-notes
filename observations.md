@@ -516,6 +516,22 @@ So the rule is not about auditors. Any report of extent — a file list, a count
 share of a total — is checked against the tree before it becomes a note,
 whichever side of the work it came from.
 
+Fifth instance, and the first that is not about extent at all. m13's note said
+areFiltersEqual named each field it compared, so a filter a screen grew was
+silently uncompared, and called the test documenting that defect well aimed. It
+named all three of the queue's fields. The defect never shipped; there was
+nothing to document. What went unchecked was not how much but whether — whether
+the thing described had happened.
+
+Same mechanism, wider than this entry states. The claim was in the agent's own
+report of the work and was carried into the note on the strength of the report,
+and nothing in a report distinguishes a claim about how much from a claim about
+whether.
+
+So the rule widens once more. A claim about the code that arrives in a report is
+checked against the code before it becomes a note, whether it is a count, a file
+list, or a defect said to exist. The check is usually one grep.
+
 ### An audit against a diff cannot see what stayed the same
 
 Observed in m11. The blind auditor found nothing, correctly: 227 lines replaced,
@@ -657,3 +673,27 @@ deletions, and every decision it made was a decision about how to name and place
 something already written.
 
 Known uses: harness-05, m10, m11, m12, m13.
+
+### A test file's own fixture can rule out the defect it guards against
+
+Observed in m13. The shared test scope's normaliseFilters named the optional
+filter explicitly, which put the key on both sides of every comparison. So the
+defect was unreachable even with an optional filter present, and even by a test
+written to find it — the fixture, not the assertions, was what made it
+impossible.
+
+The file was already missing the combination that fails: it exercised the
+comparison and it round-tripped a view through storage, and never both. Fixing
+that alone would not have been enough.
+
+This file already records tests that assert a negative through a path that cannot
+produce the positive — m13-3, and m03-4 before it. This is a step further back.
+There the assertion could not fail; here the setup could not produce the
+condition the assertion was about.
+
+Nothing distinguishes either from a passing suite. Coverage reports both as
+executed, and mutation testing sees neither: it mutates source, not fixtures.
+
+Practical consequence: when a test is written to prove a specific defect cannot
+happen, the fixture is the first thing to check, and the test is only evidence if
+it has been seen to fail against the code it was written for.
