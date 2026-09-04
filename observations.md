@@ -549,7 +549,7 @@ a second pass over the untouched tree is needed.
 
 ### The number of open decisions is the cost, not the size of the work
 
-Third correction to the same note.
+A correction to the same note.
 
 harness-05 recorded that combining three unrelated pieces of work in one brief
 cost time, and inferred the batching was the cause.
@@ -640,7 +640,7 @@ brief said was there.
 
 ### Cost tracks new concepts, not open decisions
 
-Third correction to this note, and each one has been narrower than the last.
+A further correction, and the narrowest yet.
 
 harness-05 recorded that batching three pieces of work into one brief cost time.
 m10 was one piece of work and cost more, so the variable moved to breadth. m11
