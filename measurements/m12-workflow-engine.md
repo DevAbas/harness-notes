@@ -167,3 +167,52 @@ the same file as m10-1, in a change whose brief made reading it mandatory.
 And m12-3 is a shape the record has not had before. Not a gap: new work
 diverging from existing work that had already answered the same question, in
 writing, in a file the agent did not open.
+
+## What was fixed
+
+The five findings were closed on fix/m12-findings, off the measurement branch.
+
+m12-1: the docs now match the code. Adding a fifth status is four edits — the
+entry, the label, the badge appearance, and the moves that reach it — and both
+records being keyed by TicketStatus is stated as the design, since the
+alternative is a lookup with a fallback that draws an unknown status grey on
+every screen at once and never says so. The rationale sits beside the record in
+TicketStatusBadge. What needs nothing is named explicitly.
+
+The counts were dropped rather than corrected, and both were wrong in a way
+worth keeping. The named trio counted the statuses' order, which lives in
+types.ts, and missed ROLE_AUDIENCES, which is a table in the file it was
+describing. "Four pure functions" was seven.
+
+m12-2: whyNothingIsOffered asks evaluateTicketMove over the transitions out of
+the status and shows the refusal it gets back. The old sentence survives as the
+fallback for the case it was true of — a status nothing leads out of, which does
+not exist. The move stays absent rather than disabled; the role decides a
+sentence, not a gate.
+
+m12-3: the reset follows CustomersPage and routes through changePage, which is
+the one door all three ways the rows change already went through.
+
+m12-4: the invalidation went into useMoveTicket rather than the card, so it
+holds for every caller and sits beside the success path it mirrors.
+
+m12-5: the docblock cites useBulkMoveTickets.
+
+Two tests added, for findings 3 and 4, both verified to fail against the
+unfixed code, and the m12-2 refusal test folded into an existing one — so the
+count is 535 rather than 536. 5 warnings unchanged, boundaries clean.
+
+One thing the fix cost, which is not part of any finding.
+
+TicketListPage came out of this at 184 lines against the 185-line threshold and
+19 against the complexity 20, and the shape of the fix was chosen for that — the
+reset routes through changePage rather than being called at each of the three
+sites. The result is better than three call sites would have been, but the
+choice was the threshold's, not the author's.
+
+That is the second time a layer-2 rule has decided how something was written
+rather than caught something written wrongly, and the first inside a
+measurement. harness-04 is the other, in the same file and against the same
+number, and there the shape it forced was worse. m09-1 is the shape to watch: at
+the limit with no primitive to reach for, the earlier answer was a className
+override.

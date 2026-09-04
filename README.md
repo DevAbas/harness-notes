@@ -251,6 +251,32 @@ four took the count to 308 modules and 778 dependencies. 277 of the 585 were
 build output, and the check reported the same number before and after a rename
 that did not reach nearly half of them (m11-1).
 
+## m12 — ticket status as a workflow
+A detailed brief, measured. Baseline harness-06, layers 1, 1b, 1c, 2 and 3 in
+place, 22 files modified, 14 new and one deleted, 534 tests up from 493. The
+second measurement run with a detailed brief, and the first to change behaviour
+that already worked rather than add a surface beside it: status went from a
+value any screen could set to a position with named moves out of it. Audited
+blind through the packaged skill after the commit, which is m11's protocol gap
+closed, and before the diff was read.
+
+Five findings. Both guides claim a fifth status needs no screen change, which is
+what the brief asked for and what TicketStatusBadge's Record keyed by the status
+union makes a compile error (m12-1). The moves card's empty state says there is
+nowhere to take the ticket, and the one case it ever renders in is an agent
+looking at a closed ticket, where the truth is that they may not reopen it
+(m12-2). A bulk move report stays pinned above a table it no longer describes
+(m12-3), a refused move leaves the ticket detail cache stale with no refetch
+coming to correct it (m12-4), and a docblock cites a hook this change deleted
+(m12-5).
+
+m12-3 is a shape the record has not had before. Not a gap: new work diverging
+from existing work that had already answered the same question, in writing, in a
+docblock on the screen it was written for, in a file this change never opened.
+
+All five closed on fix/m12-findings, with two tests added and verified to fail
+against the unfixed code.
+
 ---
 
 # What the measurements with a harness show
@@ -297,6 +323,19 @@ And one about the method rather than the work. The blind auditor reads a diff,
 so it cannot see a file that correctly did not change: apps/api/dist/ still
 carries the old scope precisely because the rename was right to leave it alone,
 and the finding that mattered was outside the auditor's frame by construction.
+
+The intersection between the two audits went to zero for the first time. m08 and
+m10 each converged on four findings; m12 converged on none. Every finding was in
+code, and the browser pass — which produced findings no diff reader could reach
+on m05 and m09 — produced nothing here, and the one thing it did produce was
+wrong. The intersection is evidence when it happens and is not evidence of
+anything when it does not.
+
+And the census keeps running. m10-1 is called the worst instance in the record
+because the false claim was in AGENTS.md, the file every future task reads
+first. m12-1 is the same file again, in a change whose brief made reading it
+mandatory, and the claim was one the brief itself had asked for. A prompt that
+names a success criterion gets it restated as achieved.
 
 ---
 
