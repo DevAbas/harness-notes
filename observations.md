@@ -562,3 +562,45 @@ name. m11 left none: every occurrence had one correct replacement and the
 compiler could see all of them.
 
 Known uses: harness-05, m10, m11.
+
+### The two audits can miss each other entirely
+
+Observed in m12. All five findings came from the blind audit; the browser pass
+produced nothing, and the one thing it did produce was wrong.
+
+m08 and m10 both converged on four findings. Here the intersection was zero, and
+the reason is where each was looking. Every m12 finding was in code — a false
+claim in AGENTS.md, an empty state naming the wrong reason, a band never reset,
+an error path that does not invalidate, a docblock citing a deleted symbol. The
+browser pass exercised refusals, roles, history and reassignment, and every one
+of those behaved correctly.
+
+The browser pass is not discredited by this. m05 and m09 produced findings no
+diff reader could reach, and harness-01c is the instance where every automated
+check passed and only a person looking at a screen noticed. What m12 shows is
+that the two passes are not redundant in either direction: a measurement whose
+defects are all in code gets nothing from the browser, and a measurement whose
+defects are visual gets nothing from the diff.
+
+Practical consequence: the intersection is evidence when it happens and is not
+evidence of anything when it does not.
+
+### Being wrong about the extent, from the reading side
+
+Fourth instance, and the first where the wrong extent is a conclusion drawn from
+the running app rather than a count in a report.
+
+I concluded from the browser that there was no role difference at all: the agent
+and admin views were identical, and a close as an agent returned 200. Both
+observations were correct. The conclusion was not — reopen returns 403 with
+"Reopen is for administrators."
+
+The gate sits on the one move I had not tried, and the two statuses I compared
+were the two where no gate applies. The audit had it right and named the same
+sentence in a different finding.
+
+The existing entry says an audit is right about the mechanism and wrong about
+the extent, and that a file list or a count gets checked before it becomes a
+note. This adds the reader's side: a negative conclusion from a browser pass —
+"there is no X" — covers only the states that were opened, and the states worth
+opening are the ones where the rule would apply.

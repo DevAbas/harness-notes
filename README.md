@@ -483,6 +483,7 @@ in it did the work.
       m09-prompt.txt   m09-redesign.md
       m10-prompt.txt   m10-global-search.md
       m11-prompt.txt   m11-scope-rename.md
+      m12-prompt.txt   m12-workflow-engine.md
 
     scaffolds/
       scaffold-reports-findings.md      no prompt file survives
