@@ -354,6 +354,9 @@ The original inference stays as what it looked like at the time. Splitting
 unrelated work is probably still right — a measurement stays clean and a failure
 stays attributable — but not because it is cheaper.
 
+**Corrected again by m11**, in its own section below. Breadth does not hold
+either: m11 was 145 files against m10's 30 and cost $1.38 against $17.56.
+
 ### Two audits, two shapes, and the second one keeps going
 
 m08 was audited twice: once by me reading the diff, once months later by a
@@ -561,6 +564,10 @@ What separates them is not size. m10's brief left seven design decisions open by
 name. m11 left none: every occurrence had one correct replacement and the
 compiler could see all of them.
 
+**Corrected by m13**, in its own section below. m12 and m13 both left five
+decisions open by name and cost $16.32 and $6.34; what separates them is what
+had to be invented, not what was left open.
+
 Known uses: harness-05, m10, m11.
 
 ### The two audits can miss each other entirely
@@ -604,3 +611,49 @@ the extent, and that a file list or a count gets checked before it becomes a
 note. This adds the reader's side: a negative conclusion from a browser pass —
 "there is no X" — covers only the states that were opened, and the states worth
 opening are the ones where the rule would apply.
+
+### Prose describing a past the repository does not have
+
+Observed in m13. The brief said there were two saved-view mechanisms to unify;
+there was one. The agent found this before starting and said so, and reformulated
+the task correctly. The artifact carries no trace of that.
+
+The commit message says "one saved-view mechanism". useSavedViews.ts explains
+that the three concerns "used to be split ... which meant the second screen to
+want saved views had to work them out again" — there was no second screen. The
+new customer scope defends itself against being a copy of a file it had no
+predecessor to copy from.
+
+The census in this file has seventeen instances of prose describing intent the
+code beside it does not carry out. This is the same failure one step back: prose
+describing a history that did not happen, written to explain a change that was
+reformulated in conversation and committed as if it had not been.
+
+What makes it worse than the others is that the agent was right. The correction
+happened, it was correct, and the only place it exists is a chat log nobody will
+read again. The next person to open useSavedViews.ts learns a false history from
+a file written by someone who knew better.
+
+Practical consequence: a reformulated task needs the reformulation in the commit
+message, and the docblocks need to describe what is there rather than what the
+brief said was there.
+
+### Cost tracks new concepts, not open decisions
+
+Third correction to this note, and each one has been narrower than the last.
+
+harness-05 recorded that batching three pieces of work into one brief cost time.
+m10 was one piece of work and cost more, so the variable moved to breadth. m11
+was 145 files and cost $1.38 against m10's 30 files and $17.56, so it moved to
+the number of decisions the brief left open.
+
+m12 and m13 both left five decisions open by name. m12 cost $16.32 over 31
+minutes of API time; m13 cost $6.34 over 12.
+
+The difference is what had to be invented. m12 built a domain from nothing: a
+transition graph, guards keyed by what they read, a role gate, a history, a bulk
+report. m13 generalised code that already existed — 174 insertions against 522
+deletions, and every decision it made was a decision about how to name and place
+something already written.
+
+Known uses: harness-05, m10, m11, m12, m13.
