@@ -149,7 +149,7 @@ Cost tracks new concepts, not open decisions. m12 and m13 both left five
 decisions open by name; m12 cost $16.32 over 31 minutes and m13 $6.34 over 12.
 m12 built a domain from nothing — a transition graph, guards, a role gate, a
 history, a bulk report. m13 generalised code that already existed: 174 insertions
-against 522 deletions. That is the third correction to this note, after
+against 522 deletions. That is a further correction to this note, after
 harness-05's batching and m11's open-decision count.
 
 The zero intersection held for a second measurement. m12's findings were all in
