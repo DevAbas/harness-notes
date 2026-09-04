@@ -1,0 +1,55 @@
+There are two saved-view mechanisms in this app and there should be one.
+
+## What is there now
+
+The ticket queue saves a filter combination under a name. The customer list does
+the same thing, separately: its own storage, its own dialog, its own active and
+modified logic, written by copying the ticket one and changing the strings.
+
+Two copies of one idea, and the second already carries the first one's rough
+edges. A third screen would make three.
+
+## What is needed
+
+One mechanism. A saved view is a named set of filters that belongs to a screen,
+and the screen asks for the views that are its own.
+
+Adding saved views to a third screen should mean describing that screen's
+filters, not writing a third sidebar and a third dialog.
+
+## What is already decided
+
+The two screens keep the behaviour they have today. A person who saved views on
+either one still has them, still sees them in the same place, and still sees the
+same active and modified states. This is a change to how it is built, not to
+what it does.
+
+The filters on the two screens are genuinely different shapes and stay that way.
+Whatever is shared cannot flatten them into one type that is wrong for both.
+
+localStorage stays. What is stored may change shape if it has to, but what is
+already stored cannot be lost.
+
+## What is not decided
+
+Where the shared mechanism lives and what it is called. Whether the sidebar, the
+dialog and the naming flow are one thing or several. How a screen describes its
+filters to it. What happens to the two existing storage keys. Whether the
+comparison that produces the modified state can be shared or has to stay
+per-screen.
+
+Those are design decisions and I want yours. AGENTS.md and the design system
+carry what this app has already decided; anything they do not answer is open,
+and if you find yourself wanting a primitive that does not exist, say so rather
+than assembling one in the feature.
+
+## Constraints
+
+- Read AGENTS.md before you start.
+- Strict TypeScript, no `any`.
+- Tests for the shared mechanism, and both screens' existing tests must still
+  pass unchanged where they describe behaviour.
+- All existing tests must pass and the count must not drop.
+- Run typecheck, lint, tests and lint:boundaries at the end and report what
+  passes.
+- Do not commit.
