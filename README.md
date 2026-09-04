@@ -277,6 +277,33 @@ docblock on the screen it was written for, in a file this change never opened.
 All five closed on fix/m12-findings, with two tests added and verified to fail
 against the unfixed code.
 
+## m13 — one saved-view mechanism
+A detailed brief, measured. Baseline fix-m12, layers 1, 1b, 1c, 2 and 3 in
+place, 5 files modified, 3 new and 3 deleted, 561 tests up from 535. Audited
+blind through the packaged skill after the commit and before the diff was read.
+
+The brief's premise was false. It described two saved-view mechanisms where main
+has one: m06's customer segments were never merged, and I read that note as if
+it described main. The agent found this before starting, said so, and
+reformulated the task correctly. What it did not do is record that anywhere in
+the artifact, so the work ships as a unification with comments describing a
+history the repository does not have (m13-1).
+
+Four findings, and that is the first. The other three: a comparison that
+disagrees with its own storage round trip about an absent key, unreachable from
+today's scopes and guaranteed to fire on the first scope with an optional filter
+(m13-2); the one test for the customer scope's distinctive behaviour, which
+cannot fail (m13-3); and a hand-rolled guard where the shared contract exports
+the schema (m13-4).
+
+The browser pass produced no finding for the third measurement in a row, which
+is not the same as producing nothing. The migration is the one guarantee no test
+covers, and the browser is the only place it can be checked.
+
+All four closed on fix/m13-findings, with a new test for m13-2 verified to fail
+against the unfixed code and m13-3's reseeded to fail when the reorder is
+removed.
+
 ---
 
 # What the measurements with a harness show

@@ -139,9 +139,20 @@ field of `TFilters`, the six scope answers are the minimum, and the two filter
 shapes stay different as the brief required. The storage key kept its old value
 with the reason written down. `sameFilters` is a better idea than what it
 replaced: `areFiltersEqual` named each field it compared, so a filter a screen
-grew was silently uncompared, and the test documenting that defect is well aimed.
-The `.map()` block was extracted per AGENTS.md rather than copied down.
-`readSavedViews` uses flatMap so surviving entries are typed by construction.
+grew would go uncompared with nothing to say so. It closes a hole the per-screen
+shape leaves open, rather than a defect that shape had. The `.map()` block was
+extracted per AGENTS.md rather than copied down. `readSavedViews` uses flatMap
+so surviving entries are typed by construction.
+
+Corrected after the fix pass. This paragraph said the missed field had shipped
+and called the test documenting it well aimed. `areFiltersEqual` named all three
+of the queue's fields, so it never did — the hole was in the shape, not in the
+code, and the test file's docblock said the same thing and has been corrected
+there. The claim came from the agent's own report of the work and I copied it
+into this note without checking, which is the entry in observations.md about a
+report's extent going unchecked. It is the first instance where what went
+unchecked was not the extent of a claim but whether the thing had happened at
+all.
 
 ## What this measurement shows
 
@@ -163,3 +174,40 @@ describing a past the repository does not have — written to explain a change
 that was reformulated, in an artifact where the reformulation left no other
 trace. The agent was right about the premise and said so; the code says
 otherwise.
+
+## What was fixed
+
+The four findings were closed on fix/m13-findings, off the measurement branch.
+
+m13-1: the two docblocks now describe what is there. The split `useSavedViews`
+describes was real — a hook held the collection and the screen worked out
+selection and drift — so that half stayed; what went is the second screen that
+never existed. The sweep found two more in the same folder: "several screens"
+where there are two, and "a third sidebar" where the second was being written.
+
+m13-2: key counting goes through a helper that drops keys whose value is
+`undefined`, matching what `JSON.stringify` does. The new test saves a view with
+an absent optional filter, round-trips it through storage, and compares.
+Verified failing against the unfixed code.
+
+m13-3: the test now seeds a stored view with its plans in another order — the
+case the scope's comment names — and verified failing when the reorder is
+removed.
+
+m13-4: `plansInDomainOrder` is exported from packages/shared and the schema
+calls it; the scope parses through `customerPlanSchema` and calls the shared
+expression rather than rewriting the rule. The ticket scope's guards were left
+alone: they parse 'all'-widened unions that have no shared schema.
+
+562 tests, 5 warnings unchanged, boundaries clean.
+
+Reaching m13-2 needed a change to the test scope itself. Its `normaliseFilters`
+named the optional filter explicitly, which put the key on both sides of every
+comparison — so the defect was unreachable even with an optional filter present,
+even by a test written to find it. The file was not merely missing the
+combination that fails; its own fixture made that combination impossible.
+
+The record has tests that assert a negative through a path that cannot produce
+the positive — m13-3 is one, m03-4 another. This is a step deeper: the harness a
+test file builds for itself can rule out the defect the file exists to guard
+against, and nothing distinguishes that from a passing suite.
