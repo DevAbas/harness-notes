@@ -528,6 +528,35 @@ in it did the work.
    a function of when a build last ran rather than of the source tree — same
    cause as m09-5, opposite direction: a scope chosen once against a structure
    that has since changed.
+   Answered by harness layer 4 — see harness/harness-07-sensors.md. First entry
+   in the record that answers this item's opening sentence rather than
+   qualifying it. Five sensors: mutation testing over packages/shared and the
+   two non-JSX files in packages/ui, 84.39% killed against a threshold of 82
+   taken from the first run; two a11y lint rules plus an axe sweep over the DOM
+   the tests already render, which found the four live list-role instances and
+   `region` on both auth screens; structural duplication scored by
+   share-of-file, because absolute thresholds cannot separate a copy from a
+   legitimate parallel here; two rules resolving the paths and symbols that
+   documents cite, which found six dead paths including a "read this first"
+   link that was a 404; and a gate, which found that eslint.config.js had been
+   promoting rules on CI=true for four commits against a CI that never existed,
+   so the strict tier had never run.
+   What it does not close is stated by mechanism rather than by intent. The
+   visual half stays open exactly as written above: jsdom has no layout, so
+   contrast, target size and focus visibility are unchecked here and nowhere
+   else, and neither the harness-01c radius break nor the m09 tints would be
+   caught by anything in layer 4. Fixtures stay open because mutation testing
+   mutates source — a test whose data cannot distinguish two branches stays
+   green, and DateRangeField.test.tsx declares two presets ending on the same
+   date, so half of isSameRange can be deleted with 703 tests passing. And most
+   of the prose category stays open, because the two doc rules resolve
+   citations and the census of seventeen is mostly claims about behaviour,
+   which cite nothing to resolve against. The instance harness-07 records is
+   the shape of the rest: support-desk/README.md opens by saying the repo has
+   no AGENTS.md and no lint rule, three times false, naming no path and no
+   symbol, and so invisible to both rules. It has since been rewritten into the
+   past tense on that branch, by hand — the sensor could not see it and a
+   person fixed it in the same change.
 
 ---
 
@@ -570,6 +599,8 @@ in it did the work.
                                         Toolbar, the tints, the rule's scope
       harness-06-boundary-scope.md      not a layer: m11-1 closed — four dist/
                                         directories excluded, 585 modules to 308
+      harness-07-sensors.md             layer 4: five sensors, and what each of
+                                        them cannot see
 
 The reports scaffold has no prompt file. Every other entry pairs its findings
 with the prompt that produced them. The auth scaffold carries two: the
