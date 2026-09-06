@@ -557,6 +557,31 @@ in it did the work.
    symbol, and so invisible to both rules. It has since been rewritten into the
    past tense on that branch, by hand — the sensor could not see it and a
    person fixed it in the same change.
+   Layer 4 shipped five sensors and none of them reads the artefact that
+   actually ships. Both vitest projects run with `css: false`, so no test in
+   this repository has ever seen a stylesheet, and CI ran typecheck, lint,
+   boundaries, duplication and tests without ever running the build. A sixth
+   was needed, and the defect that proved it came from the commit that added
+   the five: a bare `reports` in .gitignore, put there for Stryker's output,
+   also matched apps/web/src/features/reports, and Tailwind's scanner honours
+   .gitignore, so the whole Reports feature was invisible to it — seven class
+   sites producing no CSS, and not one of the five sensors that arrived in that
+   same commit could see what it broke. See
+   harness/harness-08-class-resolution.md.
+   What the sixth closes is the harness-01c shape, by mechanism rather than by
+   a person looking at a screenshot: a class whose name is unchanged and whose
+   meaning is gone emits no rule, and the built stylesheet says so.
+   `--radius-element` removed from tokens.css was named at 14 sites across 12
+   files, with typecheck clean, lint at 5 warnings and all 757 tests green —
+   including the eight in Alert.test.tsx, which asserts that class three times.
+   The paragraph above was written of the five, and its first half no longer
+   holds: the radius break is the case the sixth reads for.
+   What stays open is the half that resolves. `--radius-element` changed to
+   `2rem` rather than removed emits a rule, ships, and is invisible to this,
+   which is the m09 tints exactly — every class resolving, three badges
+   indistinguishable. That is still the visual sensor the record keeps naming,
+   and jsdom's missing layout still leaves contrast, target size and focus
+   visibility unchecked here and nowhere else.
 
 ---
 
@@ -601,6 +626,8 @@ in it did the work.
                                         directories excluded, 585 modules to 308
       harness-07-sensors.md             layer 4: five sensors, and what each of
                                         them cannot see
+      harness-08-class-resolution.md    layer 4: a sixth sensor, over the built
+                                        stylesheet the other five never read
 
 The reports scaffold has no prompt file. Every other entry pairs its findings
 with the prompt that produced them. The auth scaffold carries two: the

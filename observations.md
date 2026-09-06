@@ -697,3 +697,35 @@ executed, and mutation testing sees neither: it mutates source, not fixtures.
 Practical consequence: when a test is written to prove a specific defect cannot
 happen, the fixture is the first thing to check, and the test is only evidence if
 it has been seen to fail against the code it was written for.
+
+### Building a sensor is the first thing that reads what it measures
+
+Five instances, across two harness branches, and none of them was the sensor's
+own subject.
+
+harness-07 found three. eslint.config.js had been promoting rules to error on
+CI=true for four commits against a CI that did not exist, so the strict tier had
+never run. The first mutation run scored 39% because workspace symlinks escape
+Stryker's sandbox and the tests ran against the unmutated original. And the
+PostToolUse hook's first catch was the config file the work had just written and
+left out of every tsconfig.
+
+harness-08 found two. A bare `reports` pattern in .gitignore, added for Stryker's
+output in the commit that shipped the sensor layer, also matched a feature
+directory — and Tailwind's scanner honours .gitignore, so three classes used only
+there produced no CSS. And CI had never run the build at all, so the artefact
+that ships was the one thing no check read.
+
+The mechanism is that a sensor has to be pointed at something, and pointing it
+means measuring the thing it will measure. That measurement is usually the first
+one anybody has taken.
+
+Two of the five are the same shape as m09-5 and m11-1: a pattern written for one
+tree that matches another. The .gitignore one is the sharpest, because the
+scanner honouring it is exactly why a filesystem walk was the wrong way to build
+the file list — the sensor would have inherited the blind spot it was built to
+find.
+
+Practical consequence: budget for it. A sensor branch is not only the sensor. The
+first run reports on the state of the repository, and on this record it has never
+once come back empty.
