@@ -40,6 +40,25 @@ agent, and which only appear to.
 Steps 6 and 7 are separate because the two audits ask different questions: mine
 looks for harness gaps, the packaged skill looks for defects. Both are needed.
 
+**The agent works inside the repository.** Every prompt confines the agent to
+the subject repo — no sibling directories, no notes, no other repos. The notes
+describe what earlier measurements found, and an agent that reads them is not
+measuring, it is recalling. This happened once, on m13, and was caught in the
+session.
+
+**The branch is clean before the numbers and before the audit.** Tools leave
+things behind: Stryker instruments source in place and does not restore it if
+the run is interrupted, and its Vitest runner writes a setup file per worker to
+the repository root. Numbers taken from a dirty tree are wrong, and an audit
+reading one attributes the residue to the work. My own edits — a .gitignore fix,
+a config line — go on main, never on the measurement branch.
+
+**Say whether the agent ran the sensors.** From harness-07 the gate runs checks
+in the agent's own loop, so an agent now corrects itself before finishing. That
+did not exist for m01 through m13, and it changes what a finding count means.
+The header records it, and a measurement compared against an earlier one says
+so.
+
 Classify before recording: harness gap, rollout problem, product decision,
 documentation, or badly specified target. Only the first two change the harness.
 
@@ -47,8 +66,10 @@ documentation, or badly specified target. Only the first two change the harness.
 
 The protocol above has changed while the experiment ran. The blind audit
 arrived around m08 and the packaged skill after it, so a file written before
-either was produced under a different method than one written after. Nothing in
-any header records which protocol state a run belongs to.
+either was produced under a different method than one written after. No header
+records which protocol state a run belongs to, save the one field for whether
+the agent ran the sensors — the change that most affects what a finding count
+means.
 
 Measurements from different protocol states are therefore not directly
 comparable on finding count.
@@ -72,8 +93,8 @@ nothing, so it is kept current or the rest decays.
 
 **`mNN-name.md`** — one file per measurement. Header carries task, branch,
 harness state, prompt style, baseline, codebase size, files touched, lint,
-duration and cost. Findings numbered per file (`m10-1`) so earlier numbers never
-shift. Each finding ends with:
+whether the agent ran the sensors, duration and cost. Findings numbered per file
+(`m10-1`) so earlier numbers never shift. Each finding ends with:
 
     Caught by: ...
     Layer: sensor missing | rule broken | rollout | not harness — documentation |
