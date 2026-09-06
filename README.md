@@ -304,6 +304,61 @@ All four closed on fix/m13-findings, with a new test for m13-2 verified to fail
 against the unfixed code and m13-3's reseeded to fail when the reorder is
 removed.
 
+## m14 — an admin screen for the plan catalogue
+A one-line task, measured. Baseline harness-08, layers 1, 1b, 1c, 2, 3 and 4 in
+place, 14 files modified and 16 new, 814 tests up from 757 and one of them
+failing at the commit. A deliberate re-run
+of m05 on a different union, and the first measurement with the sensors running
+inside the agent's own loop. Audited blind through the packaged skill after the
+commit and before the diff was read.
+
+Six findings, all six from the audit, all six verified against the code before
+being written down, and none of them wrong — a first in this record. Half of
+every ladder refusal points the admin at a plan the dialog is not showing, and
+the rule's docblock argues for exactly the property the sentence does not have
+(m14-1). Two comments say the dialog tracks the live row, above four useState
+initialisers that capture it at mount (m14-2). A store method with no caller and
+a schema exported to nobody (m14-3). Plans is the second admin-only screen and
+RequireRole.test.tsx is not in the diff (m14-4). A bounds docblock cites a `max`
+on a field that is a text input (m14-5). And the bulk customer operations leave
+the catalogue's count stale for the app's stale window, which no test can open
+because the test client sets staleTime: 0 (m14-6).
+
+A seventh came from the harness rather than from either pass. planKeys.ts is
+sessionKeys.ts at 100% share and nothing recorded the pair, so lint:duplication
+was red at the commit and the check's own test failed with it (m14-7). It is the
+first finding in this record that a layer produced, and the first measurement
+committed red — the numbers were taken before the commit, and the detector's
+input is the tracked file list, 195 files at main against 207 at the commit. The
+audit could not see it either: the skill forbids the auditor from running the
+repository's own checks, so the constraint that keeps the two passes independent
+put this one outside both.
+
+None of the six was caught by any layer, and the re-run is what makes that
+legible. Two of m05's five were layer-1 gaps and are impossible now — Icon and
+Heading exist and the lint rules are at error. Two were visual, and the shape
+they lived in was not built, because the editor is a modal rather than an
+editable row. The union deletion m05 recorded did not recur: the plan's name is
+not editable, because it is the identity a customer row stores. So the harness
+closed the kinds m05 found, and what is left sits outside all four layers. Four
+of the six are prose describing a property the code beside it does not have, one
+is an assertion nobody wrote, and one is a defect the test client's own
+staleTime puts out of reach — the m13 fixture shape at global scale.
+
+What was not asked for is the other half of the measurement. The prompt said see
+and edit; what arrived was 2098 lines over 30 files, a customer count per plan
+with a new cross-feature join, and a monotonic price and seat ladder that
+permanently forbids a promotional inversion through the product. Same category
+as m10's reports gate, and wider: there a screen was closed, here a rule was
+invented.
+
+Three of the seven closed on fix/m14-findings, with the ledger entry m14-7 asked
+for: the deictic clause dropped rather than threaded through, the dead store
+method and unused schema removed, and the bounds docblock rewritten per field.
+Removing the schema falsified the docblock above the shape it was spread from,
+which is the census arriving by a new route — introduced by the fix for another
+finding, and caught in the same change. Left open: m14-2, m14-4 and m14-6.
+
 ---
 
 # What the measurements with a harness show
@@ -513,10 +568,11 @@ in it did the work.
    m10 puts doc freshness at its worst: the claim that is false is a rule in
    AGENTS.md, repeated in two source files and checked by none of them, and the
    edit it promises is safe is the one that opens a silent authorization hole.
-   The census of prose contradicting the code beside it now stands at seventeen
-   instances across the record, re-taken in observations.md. Nothing closes it —
-   every other census in this record ends in a primitive, and there is no
-   primitive to write for a comment that does not check itself.
+   The census of prose contradicting the code beside it now stands at
+   twenty-four instances across the record, re-taken in observations.md after
+   m14. Nothing closes it — every other census in this record ends in a
+   primitive, and there is no primitive to write for a comment that does not
+   check itself.
    m11 is the same gap from the other side. m09-5 was a rule whose scope had
    stopped covering the tree it governs; m11-1 is a boundary check that covers a
    tree it should not — depcruise walked four dist/ directories, so 277 of the
@@ -550,11 +606,11 @@ in it did the work.
    green, and DateRangeField.test.tsx declares two presets ending on the same
    date, so half of isSameRange can be deleted with 703 tests passing. And most
    of the prose category stays open, because the two doc rules resolve
-   citations and the census of seventeen is mostly claims about behaviour,
-   which cite nothing to resolve against. The instance harness-07 records is
-   the shape of the rest: support-desk/README.md opens by saying the repo has
-   no AGENTS.md and no lint rule, three times false, naming no path and no
-   symbol, and so invisible to both rules. It has since been rewritten into the
+   citations and the census, twenty-four after m14, is mostly claims about
+   behaviour, which cite nothing to resolve against. The instance harness-07
+   records is the shape of the rest: support-desk/README.md opens by saying the
+   repo has no AGENTS.md and no lint rule, three times false, naming no path and
+   no symbol, and so invisible to both rules. It has since been rewritten into the
    past tense on that branch, by hand — the sensor could not see it and a
    person fixed it in the same change.
    Layer 4 shipped five sensors and none of them reads the artefact that
@@ -604,6 +660,8 @@ in it did the work.
       m10-prompt.txt   m10-global-search.md
       m11-prompt.txt   m11-scope-rename.md
       m12-prompt.txt   m12-workflow-engine.md
+      m13-prompt.txt   m13-saved-views-unified.md
+      m14-prompt.txt   m14-customer-plans-admin.md
 
     scaffolds/
       scaffold-reports-findings.md      no prompt file survives

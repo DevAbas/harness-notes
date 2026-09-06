@@ -25,19 +25,19 @@ agent, and which only appear to.
 2. Prompt states the requirement, not the solution. If it names the library and
    the layout, the measurement is void.
 3. Agent runs. No intervention beyond answering its questions.
-4. Numbers: typecheck, lint, tests, boundaries, `git status`. Test count must
-   not drop.
-5. Usage: API time, wall time, cost.
-6. Blind audit **before** I read the diff. Order matters — once I have read it I
+4. Commit, keep on the branch. Do not merge by default — merged defects get
+   paid for daily.
+5. Numbers: typecheck, lint, tests, boundaries, duplication, classes,
+   `git status`. Test count must not drop.
+6. Usage: API time, wall time, cost.
+7. Blind audit **before** I read the diff. Order matters — once I have read it I
    cannot brief the auditor without leaking my hypothesis.
-7. My own read: exercise it, then read the diff from the design-system side.
-8. Compare: intersection, auditor only, me only. The intersection is the
+8. My own read: exercise it, then read the diff from the design-system side.
+9. Compare: intersection, auditor only, me only. The intersection is the
    strongest evidence the method produces.
-9. Record.
-10. Commit, keep on the branch. Do not merge by default — merged defects get
-    paid for daily.
+10. Record.
 
-Steps 6 and 7 are separate because the two audits ask different questions: mine
+Steps 7 and 8 are separate because the two audits ask different questions: mine
 looks for harness gaps, the packaged skill looks for defects. Both are needed.
 
 **The agent works inside the repository.** Every prompt confines the agent to
@@ -52,6 +52,10 @@ the run is interrupted, and its Vitest runner writes a setup file per worker to
 the repository root. Numbers taken from a dirty tree are wrong, and an audit
 reading one attributes the residue to the work. My own edits — a .gitignore fix,
 a config line — go on main, never on the measurement branch.
+
+**The numbers are taken after the commit.** Some checks read the tracked file
+list rather than the working tree — lint does not, duplication does — so a check
+that is green before a commit can be red after it. That is how m14 went in red.
 
 **Say whether the agent ran the sensors.** From harness-07 the gate runs checks
 in the agent's own loop, so an agent now corrects itself before finishing. That

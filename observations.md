@@ -24,10 +24,25 @@ anyway.
 
 ### Comments that describe intent rather than the code beside them
 
-Seventeen instances. The number stood at five through four measurements and two
-audits without being re-taken, which is the failure this file recorded after
-m08: a count in a finding is a search, not a judgement. Re-taken here against
-the files.
+Twenty-four instances. The number stood at five through four measurements and
+two audits without being re-taken, which is the failure this file recorded after
+m08: a count in a finding is a search, not a judgement. Re-taken at m10 against
+the files, at seventeen. Re-taken again here, after m14, across everything the
+record has gained since — m11 through m14, harness-06 through harness-08, and
+the fix passes on m12 and m13. The seven new ones were read in the files rather
+than off the notes: at their measurement commits where a fix has since closed
+them, and in the branch for m14's three.
+
+What counts is a claim: about behaviour, about a sibling, or a count or a rule
+stated as fact. A citation that does not resolve is not one — harness-07's two
+doc rules find those, and the six dead paths they found belong to that layer's
+numbers rather than to this list. m12-5 is the exception and stays: the symbol
+rule is restricted to SCREAMING_SNAKE_CASE and the name it cites is a camelCase
+hook, so nothing resolves it either way.
+
+Not counted here: m13-1 and the two the m13 fix sweep found beside it. They are
+prose describing a past the repository does not have, which has its own entry
+further down.
 
 A comment arguing for behaviour the code beneath it does not have:
 
@@ -48,21 +63,41 @@ A comment arguing for behaviour the code beneath it does not have:
            looks exactly like a complete one, then truncates at page fifty
     m10-2  close() names the risk that "the old results would otherwise be the
            first thing on screen", and leaves them in the cache
+    m13-2  a view is stored canonically "so that a view is never modified the
+           moment it is saved" — with an optional filter it is marked modified
+           the instant it is saved, and on every reload after
+    m14-1  a ladder rule's requirement "names the pair rather than the plan
+           being edited", so that neither end of a broken rung is sent to the
+           wrong screen; the sentence it returns ends "or price this one above
+           it"
+    m14-2  the plan is "held by name rather than as a row, so the dialog is
+           always looking at what the query holds now", above four useState
+           initialisers that read it once, and a prop documented as the plan
+           "as the server last reported it"
 
 Documentation describing a system, or a sibling, that does not match:
 
-    rep-7   the design system README's palette claim — bg-blue-500 "produces no
-            CSS at all", months after that reset was removed
-    rep-8   the same README on loading states: three components sharing an
-            approach that three of them implemented privately
-    cust-3  the dialog contract listed as complete, one item short of what
-            aria-modal promises, and Drawer's docstring inheriting it whole
-    cust-5  List's docstring says empty and loading states belong to it "for the
-            same reason they belong to TableBody", written as the third copy
-    m08     `leading`'s one-line doc still offers a checkbox, eleven lines above
-            the prop whose docblock explains that a checkbox cannot go there
-    m10-4   Input's labelHidden documents itself as the same mechanism as
-            Checkbox's, which uses the opposite one
+    rep-7       the design system README's palette claim — bg-blue-500 "produces
+                no CSS at all", months after that reset was removed
+    rep-8       the same README on loading states: three components sharing an
+                approach that three of them implemented privately
+    cust-3      the dialog contract listed as complete, one item short of what
+                aria-modal promises, and Drawer's docstring inheriting it whole
+    cust-5      List's docstring says empty and loading states belong to it "for
+                the same reason they belong to TableBody", written as the third
+                copy
+    m08         `leading`'s one-line doc still offers a checkbox, eleven lines
+                above the prop whose docblock explains that a checkbox cannot go
+                there
+    m10-4       Input's labelHidden documents itself as the same mechanism as
+                Checkbox's, which uses the opposite one
+    m12-5       useBulkUpdateCustomerPlan's docblock names the division
+                useBulkUpdateStatus makes, in the change that deleted it
+    harness-07  support-desk/README.md on what the repo does not have: no
+                AGENTS.md, no lint rule enforcing the design system, the rules
+                written in prose somewhere else — three claims, three false. The
+                link beside them was dead too, and the link is the only part of
+                the paragraph a rule could reach.
 
 Prose stating a count or a rule the code does not carry:
 
@@ -73,18 +108,41 @@ Prose stating a count or a rule the code does not carry:
     harness-04  the eslint config comment saying four violations; it was six
     m10-1       AGENTS.md's gating invariant, restated in RequireRole.tsx,
                 satisfied for one screen of four
+    m12-1       AGENTS.md and README.md on a fifth status: an entry plus the
+                moves that reach it, and "no screen that draws a status has to
+                change", where TicketStatusBadge's Record keyed by the union
+                makes it a compile error on a screen. The same paragraph's
+                "three tables and four pure functions" counts a table that lives
+                in another file, misses one in the file it is describing, and is
+                out by three on the functions.
+    m14-5       the plan bounds sit outside the schema because the fields read
+                them too — "a maxLength on the description, a max on the seat
+                field". The seat field is a text input with inputMode, twelve
+                lines under a comment arguing for exactly that, and max does
+                nothing outside type="number".
 
-Seventeen, and the count has stopped being the argument. Three instances is the
+Twenty-four, and the count was never the argument. Three instances is the
 threshold this repo closes a gap at, and that was passed before the harness
 existed. Every other census in this record ends in a primitive — five glyphs
 became Icon, four hand-written selected states became a variant, three Alert
 overrides became a prop. There is nothing to write here. A comment cannot be
 made to check itself, and no rule reads English against the code beneath it.
 
-What the list is for now is the distribution, and the distribution has moved.
-The first seven are a function's comment against its own body, which costs a
-reviewer's attention. The last four are prose in files that later work is
-written against, which costs more — see the section on a better brief below.
+Layer 4 was built between the two takes, and part of it was built for this. The
+doc-freshness sensor's two rules close none of the twenty-four. They resolve
+what a document cites, and only two of these cite anything at all: a camelCase
+hook the symbol rule excludes to stay useful, and a dead link sitting beside
+three claims it says nothing about.
+
+The distribution is ten, eight and six. The first ten are a function's comment
+against its own body, which costs a reviewer's attention. The last six state a
+fact — a count, a rule — which is the kind of prose later work quotes rather
+than re-derives, and AGENTS.md is two of them.
+
+m14 is the strongest form the finding has taken. Three instances, in a
+measurement with all four layers in place and the sensors running inside the
+agent's own loop for the first time. The agent ran them, corrected what they
+reported, and wrote three claims that none of them can read.
 
 The comments in this codebase are good enough to buy trust. That trust is
 occasionally misplaced, and a reviewer who reads the comment stops looking.
@@ -645,6 +703,9 @@ code beside it does not carry out. This is the same failure one step back: prose
 describing a history that did not happen, written to explain a change that was
 reformulated in conversation and committed as if it had not been.
 
+The census stood at seventeen when that was written. It was re-taken after m14
+and stands at twenty-four; these three are counted here rather than there.
+
 What makes it worse than the others is that the agent was right. The correction
 happened, it was correct, and the only place it exists is a chat log nobody will
 read again. The next person to open useSavedViews.ts learns a false history from
@@ -729,3 +790,28 @@ find.
 Practical consequence: budget for it. A sensor branch is not only the sensor. The
 first run reports on the state of the repository, and on this record it has never
 once come back empty.
+
+### A check that reads the tracked file list has a state no pass covers
+
+Observed in m14. The duplication detector's input is `git ls-files apps packages`
+rather than the working tree, so it counted 195 files at main and 207 at the
+commit. A copy made of a new file is invisible to it until the file is tracked,
+which means the check turns red at the commit rather than while the work that
+made it red is being done.
+
+Three passes ran over that measurement and the gap sits between all of them. The
+agent ran the sensors inside its own loop, and the loop ends before the commit.
+I took the header numbers before the commit, which is where every header in this
+record has taken them from. And the audit is forbidden from running the
+repository's own checks — "those numbers are taken before the audit starts" —
+which is the constraint that keeps it independent of the sensor pass.
+
+So the measurement was committed red, the header said 5 warnings and 814 tests,
+and m14-7 was found afterwards by running the check by hand. The sensor worked:
+it named the pair, both files and the shape they share. What failed was that
+nothing in the protocol reads a sensor after the commit.
+
+Practical consequence: for any check whose input is what git tracks, the numbers
+belong after the commit and not before it. There is one such check in this
+repository, and it is the one that fired.
+
