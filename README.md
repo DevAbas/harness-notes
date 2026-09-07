@@ -49,9 +49,14 @@ it carries a Layer: line because the file numbers every section that way.
     observations.md  the patterns that recur across measurements
     measurements/    the detail behind any single row
 
-The subject repository is separate. Every measurement is a branch that was never
-merged, so each defect stays where it was found, and the tags mark the harness
-state each run happened in.
+The subject repository is separate, and every measurement is still a branch
+there. Two of the fourteen were never merged; the other twelve are ancestors of
+`main`, so the merge is not what preserves them. What does is that no
+measurement commit was ever amended, squashed or rewritten. Where findings were
+closed, they were closed in a separate commit stacked on top — so the branch
+still points at the agent's exact output, `git show` on it is that diff and
+nothing else, and the commit immediately after it is what the defects cost. The
+tags mark the harness state each run happened in.
 
 ---
 
