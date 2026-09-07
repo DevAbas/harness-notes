@@ -467,6 +467,19 @@ The correction is mechanical. Where a finding claims a count, the count is a
 search, not a judgement. The blind audit did exactly that on the Checkbox note
 and found the fourth site 29 lines below one it had already read closely.
 
+The rule reaches this record's own prose. harness-06 wrote "277 of the 585,
+slightly more than half, were build output" in the same paragraph as the two
+numbers that disprove it — 277 of 585 is 47.4%. It was restated in that form
+twice, in the diff-audit entry below and in README.md's third root cause, and
+neither restatement re-derived it. The one place that did, README.md's m11 entry,
+said "nearly half" and stayed right through m12, m13 and m14 while three other
+places were wrong.
+
+A count copied forward is a count nobody has taken, and copies agreeing with each
+other is what a single unchecked source looks like from the reading side. All
+three sites corrected in the README pass after m14, with the original wording
+kept in harness-06.
+
 ### The questions an agent does not ask are a sensor
 
 When m08 was recorded I noted that the agent stopped to ask which bulk actions
@@ -598,7 +611,9 @@ finding was that `.dependency-cruiser.cjs` walks a `dist/` directory, so some of
 the 585 modules it reports are build artefacts and the count in every header from
 m09 on is a function of when a build last ran. The m11 report put that at 157
 modules under `apps/api/dist/`; harness-06 found four `dist/` directories, and
-277 of the 585 — more than half — were build output.
+277 of the 585 — just under half — were build output. (This read "more than
+half" until the README pass after m14; the correction is in the count-is-a-search
+entry above.)
 
 Those files did not change. They were correctly left alone, and being left alone
 is exactly what made them invisible to an auditor reading a diff.

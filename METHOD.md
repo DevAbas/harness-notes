@@ -35,7 +35,8 @@ agent, and which only appear to.
 8. My own read: exercise it, then read the diff from the design-system side.
 9. Compare: intersection, auditor only, me only. The intersection is the
    strongest evidence the method produces.
-10. Record.
+10. Record. The entry table at the top of README.md is updated in the same
+    change as the entry below it.
 
 Steps 7 and 8 are separate because the two audits ask different questions: mine
 looks for harness gaps, the packaged skill looks for defects. Both are needed.
@@ -62,6 +63,14 @@ in the agent's own loop, so an agent now corrects itself before finishing. That
 did not exist for m01 through m13, and it changes what a finding count means.
 The header records it, and a measurement compared against an earlier one says
 so.
+
+**The entry table is updated with the entry.** README.md opens with a row per
+measurement — task, prompt style, layers in place, findings — and it is the most
+read thing in the file. A row added later than the entry it summarises is a count
+nobody has taken, which this record has already paid for twice: the module counts
+that stood in every header from m09 to m11 while the check producing them walked
+four dist/ directories, and the artefact share restated at three sites from one
+source where the division had never been done. Same change, or it does not go in.
 
 Classify before recording: harness gap, rollout problem, product decision,
 documentation, or badly specified target. Only the first two change the harness.

@@ -1,18 +1,77 @@
+# Agent harness measurements
+
+A measurement experiment on one repository. I write the task, an agent builds
+it, and I measure what it got wrong and which mechanism should have caught it.
+Fourteen measurements, three scaffolds and nine pieces of harness work, all on a
+support-ticket admin panel with its own design system.
+
+The question: as a codebase grows, which mechanisms actually constrain a coding
+agent, and which only appear to.
+
+I expected the design system rules to break. Almost none of them did — six were
+broken across the first six measurements and two scaffolds. What broke instead
+was everything nobody had written down: five hand-built confirm dialogs, five
+hand-written selected states, six hand-assembled page titles, the same gap
+filled again and filled differently. The harness closed those kinds, and what
+replaced them is prose — a comment, a docblock or a rule in AGENTS.md describing
+a property the code beside it does not have. That census stands at twenty-four
+instances, and no layer here has closed it.
+
+         what the task was      prompt style       layers         findings
+
+    m01  CSV export, tickets    one line           —              4
+    m02  Saved views            short paragraph    —              10
+    m03  HTTP API layer         detailed spec      —              9
+    m04  Assign a ticket        one line           —              5
+    m05  Status/priority admin  one line + 2 Qs    —              5
+    m06  Customer segments      one line           —              7
+    m07  CSV export, customers  one line           1 2 3          4
+    m08  Bulk actions           one line + 1 Q     1 2 3          5
+    m09  New visual identity    tokens + 4 rounds  1 1b 1c 2 3    5
+    m10  Global search          detailed brief     1 1b 1c 2 3    4
+    m11  Rename the npm scope   mechanical         1 1b 1c 2 3    1
+    m12  Status as a workflow   detailed brief     1 1b 1c 2 3    5
+    m13  Unify saved views      detailed brief     1 1b 1c 2 3    4
+    m14  Plan catalogue admin   one line           1 1b 1c 2 3 4  7
+
+The counts are not comparable down the column. The protocol changed while the
+experiment ran — the blind audit arrived around m08, the packaged skill after
+it, and at m14 the sensors began running inside the agent's own loop — so a
+count measures the run and the method together. Three rows do not match a plain
+read of their files. m08 was audited a second time, blind, and that pass found
+eight against my five. m14's seventh is the only finding in this record that a
+layer produced rather than a person. And m03 reads nine where its file numbers
+ten: m03-10 is a synthesis of the nine above it rather than a tenth finding, and
+it carries a Layer: line because the file numbers every section that way.
+
+    METHOD.md        how a measurement is run, and what each header carries
+    README.md        what each one showed — this file, from here down
+    observations.md  the patterns that recur across measurements
+    measurements/    the detail behind any single row
+
+The subject repository is separate. Every measurement is a branch that was never
+merged, so each defect stays where it was found, and the tags mark the harness
+state each run happened in.
+
+---
+
 # Failures log
 
-Repo: a support tickets admin panel, since extended with a reports section and
-a customers directory. React, TypeScript, Tailwind, and its own design system
-with a README that spells out the rules.
+Repo: a support tickets admin panel. React, TypeScript, Tailwind, and its own
+design system with a README that spells out the rules.
 
-Nothing enforces those rules. No AGENTS.md, no CLAUDE.md, no lint rule for the
-design system. The rules are written down and that is all.
+At the start nothing enforced those rules. There was no AGENTS.md, no CLAUDE.md
+and no lint rule for the design system. The rules were written down and that was
+all.
 
 Question being measured: does the agent follow rules that are written but not
 enforced?
 
-That is the starting state, and the first six measurements answer it. The repo
-has since grown a harness in layers — primitives, a typography and token layer,
-lint rules, an AGENTS.md — and every measurement after m06 tests what a layer
+That was the starting state, and the first six measurements answer it. The repo
+has since grown a reports section, a customers directory, authentication, a
+global search and a plan catalogue. It has also grown a harness in four layers —
+primitives, with a typography and token layer extending them; lint rules; an
+AGENTS.md; and sensors — and every measurement after m06 tests what a layer
 closes.
 
 How a measurement is run, what each file's header carries and what the layer
@@ -125,8 +184,8 @@ differently.
 - Blocks left inline that should be components: m02-4 reproduced in shape and in
   scale as m06-2, four measurements later.
 
-All 222 tests pass. Typecheck and lint are clean. Every finding above passes all
-three.
+All 222 tests pass at m06. Typecheck and lint are clean. Every finding above
+passes all three.
 
 ## Written instructions are not reliably followed either
 
@@ -328,11 +387,8 @@ A seventh came from the harness rather than from either pass. planKeys.ts is
 sessionKeys.ts at 100% share and nothing recorded the pair, so lint:duplication
 was red at the commit and the check's own test failed with it (m14-7). It is the
 first finding in this record that a layer produced, and the first measurement
-committed red — the numbers were taken before the commit, and the detector's
-input is the tracked file list, 195 files at main against 207 at the commit. The
-audit could not see it either: the skill forbids the auditor from running the
-repository's own checks, so the constraint that keeps the two passes independent
-put this one outside both.
+committed red — the mechanism is in observations.md, and the protocol rule it
+produced is in METHOD.md.
 
 None of the six was caught by any layer, and the re-run is what makes that
 legible. Two of m05's five were layer-1 gaps and are impossible now — Icon and
@@ -353,11 +409,10 @@ as m10's reports gate, and wider: there a screen was closed, here a rule was
 invented.
 
 Three of the seven closed on fix/m14-findings, with the ledger entry m14-7 asked
-for: the deictic clause dropped rather than threaded through, the dead store
-method and unused schema removed, and the bounds docblock rewritten per field.
-Removing the schema falsified the docblock above the shape it was spread from,
-which is the census arriving by a new route — introduced by the fix for another
-finding, and caught in the same change. Left open: m14-2, m14-4 and m14-6.
+for. Removing the unused schema falsified the docblock above the shape it was
+spread from, which is the census arriving by a new route: introduced by the fix
+for another finding, and caught in the same change. Left open: m14-2, m14-4 and
+m14-6.
 
 ---
 
@@ -383,9 +438,6 @@ rest (m09-5). Widened to apps/web/src in harness-05, where the violations it
 surfaced were migrated in the same change. And a rule that fires and is ignored
 is a rule that only reports (m07-3).
 
-The layer-1 claim is now a number rather than an argument. It is not zero, and
-the reason it is not zero is written down.
-
 m10 prices the prompt rather than a layer. A detailed brief, measured the same
 way as the one-line tasks, halved the finding count and changed none of its
 kind: three of four are prose that describes the work as intended rather than as
@@ -399,7 +451,10 @@ m11 prices the decision count. It touched 145 files against m10's 30 and cost
 $1.38 against $17.56 — five times the files, thirteen times cheaper — because
 m10's brief left seven design questions open by name and m11 left none. That is
 the third correction to the same note: harness-05 blamed batching, m10 moved it
-to breadth of work, and m11 moves it to the number of open decisions.
+to breadth of work, and m11 moves it to the number of open decisions. Corrected
+twice more in observations.md: m12 and m13 both left five decisions open by name
+and cost $16.32 against $6.34, so the variable is what had to be invented rather
+than what was left open.
 
 And one about the method rather than the work. The blind auditor reads a diff,
 so it cannot see a file that correctly did not change: apps/api/dist/ still
@@ -411,13 +466,30 @@ m10 each converged on four findings; m12 converged on none. Every finding was in
 code, and the browser pass — which produced findings no diff reader could reach
 on m05 and m09 — produced nothing here, and the one thing it did produce was
 wrong. The intersection is evidence when it happens and is not evidence of
-anything when it does not.
+anything when it does not. m13 took the browser pass's silence to a third
+measurement running; on m14 it confirmed a finding the audit had already made
+rather than producing one of its own.
 
-And the census keeps running. m10-1 is called the worst instance in the record
-because the false claim was in AGENTS.md, the file every future task reads
-first. m12-1 is the same file again, in a change whose brief made reading it
-mandatory, and the claim was one the brief itself had asked for. A prompt that
-names a success criterion gets it restated as achieved.
+And the census keeps running. m12-1 is AGENTS.md again, in a change whose brief
+made reading it mandatory, and the claim was one the brief itself had asked for.
+A prompt that names a success criterion gets it restated as achieved.
+
+m13 prices the brief's premise. It described two saved-view mechanisms where
+main has one; the agent found that before starting and reformulated the task
+correctly, and the correction exists only in a chat log. The work ships as a
+unification whose comments explain a history the repository does not have
+(m13-1). A brief that is wrong about the repo gets corrected in conversation and
+committed as though it never was.
+
+m14 is the first measurement a layer found something in. lint:duplication named
+planKeys.ts and sessionKeys.ts, both files and the shape they share (m14-7);
+every finding in this record before it came from a person or from an audit. It
+arrived after the commit, because it is the one check whose input is what git
+tracks rather than the working tree, so the measurement went in red with neither
+pass looking. The other six sit outside all four layers, and being a re-run of
+m05 is what makes that legible: the kinds m05 found are closed, and what is left
+is mostly prose describing a property the code beside it does not have — the
+category no layer here has closed.
 
 ---
 
@@ -433,10 +505,10 @@ findings.
 
 The feature code uses every primitive that exists; what got rebuilt by hand is
 the design system's own chrome — CardFooter reassembled class for class in
-ReportToolbar (rep-1), and BarChart reinventing the loading and empty state that
-TableBody provides and that it imports two hundred lines lower (rep-5). rep-3 is
-the padding count: eight distinct values in the repo, every one of them on the
-spacing scale, so no lint rule fires and none ever will.
+ReportToolbar (rep-1), and BarChart reinventing what TableBody provides and
+imports two hundred lines lower (rep-5, above). rep-3 is the padding count:
+eight distinct values at this scaffold, every one of them on the spacing scale,
+so no lint rule fires and none ever will.
 
 Two findings are against the design system README itself. It claimed a Tailwind
 palette reset that had been removed months earlier, and an agent added five
@@ -492,7 +564,9 @@ Two layers can be watched working here for the first time. Every new form uses
 SubmitEventHandler rather than the deprecated FormEvent that spread through four
 files in m04 unseen (layer 2), and AuthCard renders Alert's band variant rather
 than switching Alert off with className (layer 1b). The four old FormEvent files
-still carry it, because the rule ships at warn — the same shape as m07-3.
+still carried it, because the rule ships at warn — the same shape as m07-3. They
+were migrated in harness-04, which found the count was six rather than four,
+because the config comment naming them was itself stale.
 
 The debugging is recorded separately, because the diagnosis was better than the
 fix: observer counts measured rather than inferred, the two further call sites
@@ -575,28 +649,24 @@ in it did the work.
    check itself.
    m11 is the same gap from the other side. m09-5 was a rule whose scope had
    stopped covering the tree it governs; m11-1 is a boundary check that covers a
-   tree it should not — depcruise walked four dist/ directories, so 277 of the
-   585 modules it counted were build output, including apps/web's minified Vite
-   bundle, cruised for boundary violations. Closed in harness-06, which found
-   the extent as well: the report that surfaced it named one directory and 157
-   modules, and excluding all four took the count to 308 modules and 778
-   dependencies. So more than half of what every header from m09 on reported was
-   a function of when a build last ran rather than of the source tree — same
-   cause as m09-5, opposite direction: a scope chosen once against a structure
-   that has since changed.
+   tree it should not — depcruise walked four dist/ directories, so just under
+   half of the modules every header from m09 on reported were build output,
+   including apps/web's minified Vite bundle, cruised for boundary violations.
+   Closed in harness-06, which found the extent as well; the numbers are in the
+   m11 entry above. Same cause as m09-5, opposite direction: a scope chosen once
+   against a structure that has since changed.
    Answered by harness layer 4 — see harness/harness-07-sensors.md. First entry
    in the record that answers this item's opening sentence rather than
    qualifying it. Five sensors: mutation testing over packages/shared and the
-   two non-JSX files in packages/ui, 84.39% killed against a threshold of 82
-   taken from the first run; two a11y lint rules plus an axe sweep over the DOM
-   the tests already render, which found the four live list-role instances and
-   `region` on both auth screens; structural duplication scored by
+   two non-JSX files in packages/ui, 84.39% killed at harness-07 against a
+   threshold of 82 taken from that run; two a11y lint rules plus an axe sweep
+   over the DOM the tests already render; structural duplication scored by
    share-of-file, because absolute thresholds cannot separate a copy from a
    legitimate parallel here; two rules resolving the paths and symbols that
-   documents cite, which found six dead paths including a "read this first"
-   link that was a 404; and a gate, which found that eslint.config.js had been
-   promoting rules on CI=true for four commits against a CI that never existed,
-   so the strict tier had never run.
+   documents cite; and a gate. What each one found on its first run, and what
+   each one cannot see, is in that file — including the gate's own catch, that
+   eslint.config.js had been promoting rules on CI=true for four commits against
+   a CI that never existed, so the strict tier had never run.
    What it does not close is stated by mechanism rather than by intent. The
    visual half stays open exactly as written above: jsdom has no layout, so
    contrast, target size and focus visibility are unchecked here and nowhere
@@ -674,7 +744,8 @@ in it did the work.
       harness-01-primitives.md          layers 1 and 1b: what they closed and what
                                         they did not
       harness-02-guides.md              layer 2: lint rules, thresholds, boundaries
-      harness-03-agents-md.md           layer 3: the eight rules no tool can check
+      harness-03-agents-md.md           layer 3: the eight rules no tool can
+                                        check, as written at harness-03
       harness-04-migrate-stragglers.md  not a layer: two migrations, one finding
       harness-01c-token-structure.md    extends layer 1: token structure, one
                                         silent visual break

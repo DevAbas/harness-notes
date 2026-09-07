@@ -21,9 +21,18 @@ There are four `dist/` directories — `apps/api`, `apps/web`, `packages/ui` and
 `packages/shared` — and excluding them all took the count from 585 to 308 and the
 dependency count from 1170 to 778.
 
-So 277 of the 585, slightly more than half, were build output. `apps/web/dist` is
-Vite's bundle, which means minified JavaScript was being counted as modules and
-cruised for boundary violations.
+So 277 of the 585 were build output. `apps/web/dist` is Vite's bundle, which
+means minified JavaScript was being counted as modules and cruised for boundary
+violations.
+
+**Corrected in the README pass after m14.** That sentence read "277 of the 585,
+slightly more than half" from harness-06 until then, in the same paragraph as the
+two numbers that disprove it: 277 of 585 is 47.4%, which is just under half. It
+was restated in that form in observations.md and in README.md's third root cause,
+and the one place that re-derived it rather than copying it — README.md's m11
+entry, at "nearly half" — was right for three measurements while three other
+places were wrong. Counted as an instance of the count-is-a-search entry in
+observations.md.
 
 The finding was right and its extent was wrong, in the same direction as the
 audit-report entry in observations.md. This time it was the agent doing the work
