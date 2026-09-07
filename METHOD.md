@@ -84,8 +84,19 @@ records which protocol state a run belongs to, save the one field for whether
 the agent ran the sensors — the change that most affects what a finding count
 means.
 
+**And the skill itself was never versioned.** It is archived at
+`skills/blind-agent-audit/`, but that is one snapshot rather than a history. It
+lives in `~/.claude/skills/`, which is not under version control, so it was
+edited in place and no record of any earlier state exists anywhere. Its files
+were last written on 2026-09-06 at 15:58 — seventeen minutes after m14's
+measurement commit and before m14's fix — so the archived copy is a state that
+arrived *after* the last measurement, and a modification time gives only the
+most recent edit. Every version before that one is gone. Knowing that a run
+happened after the skill arrived therefore does not say which skill it ran.
+
 Measurements from different protocol states are therefore not directly
-comparable on finding count.
+comparable on finding count, and two runs on the same side of the m08 boundary
+may still have been audited by different skills.
 
 ## Scaffold or measurement
 
@@ -96,7 +107,8 @@ never the variable.
 ## The notes
 
 Measurement files and their prompts are in `measurements/`, scaffold files in
-`scaffolds/`, harness work in `harness/`. README.md, METHOD.md and
+`scaffolds/`, harness work in `harness/`, and the packaged audit skill in
+`skills/` — one snapshot, with the caveat above. README.md, METHOD.md and
 observations.md sit at the root.
 
 **`README.md`** — the result. The measurements, what each one showed, the
